@@ -7,11 +7,11 @@ namespace eCommerceStarterCode.Models
     {
         [Key]
         public int Id { get; set; }
-        public int name { get; set; }
-        public int street { get; set; }
-        public int city { get; set; }
-        public int zip { get; set; }
-        public int type { get; set; }
+        public string name { get; set; }
+        public string street { get; set; }
+        public string city { get; set; }
+        public string zip { get; set; }
+        public string type { get; set; }
 
         [ForeignKey("User")]
         public string UserID { get; set; }  

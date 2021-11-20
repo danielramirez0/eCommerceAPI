@@ -23,11 +23,21 @@ namespace eCommerceStarterCode.Controllers
         {
             var userId = User.FindFirstValue("id");
             var addresses = _context.Addresses.Where(a => a.UserID == userId);
-            if (addresses.Count() == 0)
-            {
-                return NotFound();
-            }
+            // Should return an empty array to handle on the front end
+            //if (addresses.Count() == 0)
+            //////{
+            ////    return NotFound();
+            //}
             return Ok(addresses);
+        }
+
+
+        [HttpGet("{search}"), Authorize]
+        public IActionResult GetByType([FromQuery] string type)
+        {
+            var userId = User.FindFirstValue("id");
+            var address = _context.Addresses.Where(a => a.UserID == userId && a.type == type);
+            return Ok(type);
         }
     }
 }
