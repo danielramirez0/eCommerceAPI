@@ -49,14 +49,14 @@ namespace eCommerceStarterCode.Migrations
                         new
                         {
                             Id = "c073f42c-79e8-41a6-a5d7-0ed41ae7aca0",
-                            ConcurrencyStamp = "b5fd0b0f-6296-4692-a315-7e8a7c2ee5f4",
+                            ConcurrencyStamp = "780fc82b-f999-466c-8bab-54e41db60347",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "a85197de-2346-492e-861e-08b0370b485f",
-                            ConcurrencyStamp = "f81804ce-607f-46e7-82a0-84265c71a9c2",
+                            ConcurrencyStamp = "b74fcc6e-2b38-4fea-850e-507cfae6ef68",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -173,9 +173,6 @@ namespace eCommerceStarterCode.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("city")
                         .HasColumnType("nvarchar(max)");
 
@@ -193,8 +190,6 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Addresses");
                 });
 
@@ -204,6 +199,9 @@ namespace eCommerceStarterCode.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BillingAddressID")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -249,6 +247,9 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ShippingAddressID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -258,6 +259,8 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BillingAddressID");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -265,6 +268,8 @@ namespace eCommerceStarterCode.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("ShippingAddressID");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -320,13 +325,23 @@ namespace eCommerceStarterCode.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("eCommerceStarterCode.Models.Address", b =>
+            modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
                 {
-                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                    b.HasOne("eCommerceStarterCode.Models.Address", "BillingAddress")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("BillingAddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("eCommerceStarterCode.Models.Address", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("ShippingAddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BillingAddress");
+
+                    b.Navigation("ShippingAddress");
                 });
 #pragma warning restore 612, 618
         }

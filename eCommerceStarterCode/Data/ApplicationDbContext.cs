@@ -8,6 +8,7 @@ namespace eCommerceStarterCode.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<User> User { get; set; }
         public ApplicationDbContext(DbContextOptions options)
             :base(options)
         {
@@ -19,6 +20,7 @@ namespace eCommerceStarterCode.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new RolesConfiguration());
+           
         }
 
     }

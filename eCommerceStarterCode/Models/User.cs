@@ -9,11 +9,11 @@ namespace eCommerceStarterCode.Models
         public string LastName { get; set; }
 
         [ForeignKey("ShippingAddress")]
-        public string ShippingAddressID { get; set; }  
+        public int ShippingAddressID { get; set; }  
         public Address ShippingAddress { get; set; }
 
         [ForeignKey("BillingAddress")]
-        public string BillingAddressID { get; set; }  
+        public int BillingAddressID { get; set; }  
         public Address BillingAddress { get; set; }
     }
 }

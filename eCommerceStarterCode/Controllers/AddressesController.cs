@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace eCommerceStarterCode.Controllers
@@ -19,16 +20,18 @@ namespace eCommerceStarterCode.Controllers
         }
 
         [HttpGet, Authorize]
-        public IActionResult GetAddressForUser()
+        public IActionResult GetAllAddressesForUser()
         {
-            var userId = User.FindFirstValue("id");
-            var addresses = _context.Addresses.Where(a => a.UserID == userId);
-            // Should return an empty array to handle on the front end
-            //if (addresses.Count() == 0)
-            //////{
-            ////    return NotFound();
-            //}
-            return Ok(addresses);
+            // var userId = User.FindFirstValue("id");
+            //// var userAddresses = _context.UserAddresses.Include(ua => ua.Address).Include(ua => ua.User).Where(ua => ua.User.Id == userId);
+            // //var addresses = _context.Addresses.Where(a => a.UserID == userId);
+            // // Should return an empty array to handle on the front end
+            // //if (addresses.Count() == 0)
+            // //////{
+            // ////    return NotFound();
+            // //}
+            // return Ok(userAddresses);
+            return Ok();
         }
 
 
@@ -36,7 +39,7 @@ namespace eCommerceStarterCode.Controllers
         public IActionResult GetByType([FromQuery] string type)
         {
             var userId = User.FindFirstValue("id");
-            var address = _context.Addresses.Where(a => a.UserID == userId && a.type == type);
+           // var userAddresses = _context.UserAddresses.Include(ua => ua.Address).Include(ua => ua.User).Where(ua => ua.User.Id == userId).Where(ua => ua.Address.type == type);
             return Ok(type);
         }
     }

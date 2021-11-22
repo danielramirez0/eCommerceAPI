@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+#nullable disable
 
 namespace eCommerceStarterCode.Models
 {
-    public class Address
+    public partial class Address
     {
         [Key]
         public int Id { get; set; }
@@ -12,9 +16,7 @@ namespace eCommerceStarterCode.Models
         public string city { get; set; }
         public string zip { get; set; }
         public string type { get; set; }
-
-        [ForeignKey("User")]
-        public string UserID { get; set; }  
-        public User User { get; set; }
+        [NotMapped]
+        public virtual ICollection<UserAddress> UserAddress { get; set; }
     }
 }
