@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceStarterCode.Models
 {
+    [Keyless]
     public class ProductRating
     {
-        [Key]
-        public int Id { get; set; }
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         [ForeignKey("ProductId")]
