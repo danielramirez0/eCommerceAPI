@@ -17,5 +17,9 @@ namespace eCommerceStarterCode.DataTransferObjects
         public int ShippingAddressID { get; set; }
         [ForeignKey("BillingAddress")]
         public int BillingAddressID { get; set; }
+
+        [NotMapped]
+        public string RoleType { get; set; }
+
     }
 }

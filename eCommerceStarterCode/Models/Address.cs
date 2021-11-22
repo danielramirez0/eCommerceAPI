@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eCommerceStarterCode.Models
 {
-    public partial class Address
+    public class Address
     {
         [Key]
         public int Id { get; set; }

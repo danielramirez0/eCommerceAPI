@@ -33,13 +33,20 @@ namespace eCommerceStarterCode.Controllers
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
                 return BadRequest(ModelState);
             }
-            await _userManager.AddToRoleAsync(user, "USER");
+            if (userForRegistration.RoleType == "Customer")
+            {
+                await _userManager.AddToRoleAsync(user, "CUSTOMER");
+            }
+            else if (userForRegistration.RoleType == "Seller")
+            {
+                await _userManager.AddToRoleAsync(user, "SELLER");
+            }
             return StatusCode(201, user);
         }
 
@@ -47,7 +54,7 @@ namespace eCommerceStarterCode.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
-            if(!await _authManager.ValidateUser(user))
+            if (!await _authManager.ValidateUser(user))
             {
                 return Unauthorized();
             }
