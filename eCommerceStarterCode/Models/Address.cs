@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//using System;
+//using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+//using System.ComponentModel.DataAnnotations.Schema;
 
-#nullable disable
+//#nullable disable
 
 namespace eCommerceStarterCode.Models
 {
@@ -16,7 +16,5 @@ namespace eCommerceStarterCode.Models
         public string city { get; set; }
         public string zip { get; set; }
         public string type { get; set; }
-        [NotMapped]
-        public virtual ICollection<UserAddress> UserAddress { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using eCommerceStarterCode.Models;
 
 namespace eCommerceStarterCode.Controllers
 {
@@ -20,27 +21,38 @@ namespace eCommerceStarterCode.Controllers
         }
 
         [HttpGet, Authorize]
-        public IActionResult GetAllAddressesForUser()
-        {
-            // var userId = User.FindFirstValue("id");
-            //// var userAddresses = _context.UserAddresses.Include(ua => ua.Address).Include(ua => ua.User).Where(ua => ua.User.Id == userId);
-            // //var addresses = _context.Addresses.Where(a => a.UserID == userId);
-            // // Should return an empty array to handle on the front end
-            // //if (addresses.Count() == 0)
-            // //////{
-            // ////    return NotFound();
-            // //}
-            // return Ok(userAddresses);
-            return Ok();
-        }
-
-
-        [HttpGet("{search}"), Authorize]
-        public IActionResult GetByType([FromQuery] string type)
+        public IActionResult GetAddressForUser([FromQuery] string type)
         {
             var userId = User.FindFirstValue("id");
-           // var userAddresses = _context.UserAddresses.Include(ua => ua.Address).Include(ua => ua.User).Where(ua => ua.User.Id == userId).Where(ua => ua.Address.type == type);
-            return Ok(type);
+            var user = _context.Users.Where(u => u.Id == userId).Include(u => u.ShippingAddress).Include(u => u.BillingAddress);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                if (type == "shipping")
+                {
+                    return Ok(user.Select(u => u.ShippingAddress).SingleOrDefault());
+                }
+                else if (type == "billing")
+                {
+                    return Ok(user.Select(u => u.BillingAddress).SingleOrDefault());
+                }
+                else
+                {
+                    return Ok(user);
+                }
+            }
         }
+
+        [HttpPost]
+        public IActionResult PostAddress([FromBody]Address value)
+        {
+            _context.Addresses.Add(value);
+            _context.SaveChanges();
+            return StatusCode(201, value);
+        }
+
     }
 }
