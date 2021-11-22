@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Controllers
 {
-    public class HomeController : Controller
+    public class ShoppingCartController : Controller
     {
         public IActionResult Index()
         {

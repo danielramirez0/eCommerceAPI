@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using eCommerceStarterCode.Models;
+using eCommerceStarterCode.Extensions;
 namespace eCommerceStarterCode.Controllers
 {
     [Route("api/[controller]")]
@@ -17,20 +18,38 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
+        
         // <baseurl>/api/examples/user
         [HttpGet]
-        public IActionResult GetProduct()
+
+        public IActionResult GetAllProducts()
         {
+            var products = _context.Products;
+            if(products == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(products);
+        }
+        [HttpGet("{search}")]
+        public IActionResult GetProductByName([FromQuery] string type, string value)
+        {
+
             var products = _context.Products;
             if (products == null)
             {
                 return NotFound();
             }
 
-            else
+                var product = _context.Products.Where(p => p.GetProperty(type) == value).SingleOrDefault();
+            if(product == null)
             {
-                return Ok(products);
+                return NotFound();
             }
+
+            return Ok(product);
+
         }
         
         public IActionResult PostProduct([FromBody]Product value)
@@ -41,11 +60,11 @@ namespace eCommerceStarterCode.Controllers
 
         }
 
-        public IActionResult DeleteProduct([FromBody]Product value)
+        public IActionResult DeleteProduct([FromBody]Product ProductId)
         {
-            _context.Products.Remove(value);
+            _context.Products.Remove(ProductId);
             _context.SaveChanges();
-            return StatusCode(201, value);
+            return StatusCode(201, ProductId);
 
         }
     }
