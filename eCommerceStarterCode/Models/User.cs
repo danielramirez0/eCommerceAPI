@@ -5,6 +5,7 @@ namespace eCommerceStarterCode.Models
 {
     public class User : IdentityUser
     {
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -15,5 +16,6 @@ namespace eCommerceStarterCode.Models
         [ForeignKey("BillingAddress")]
         public int BillingAddressID { get; set; }  
         public Address BillingAddress { get; set; }
+
     }
 }

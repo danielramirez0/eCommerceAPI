@@ -15,7 +15,7 @@ namespace eCommerceStarterCode.Data
         public DbSet<ProductRating> ProductRatings  { get; set; }
         public DbSet<SellerProduct> SellerProducts { get; set; }
         public ApplicationDbContext(DbContextOptions options)
-            :base(options)
+            : base(options)
         {
 
         }
@@ -25,7 +25,7 @@ namespace eCommerceStarterCode.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new RolesConfiguration());
-           
+
         }
 
     }
