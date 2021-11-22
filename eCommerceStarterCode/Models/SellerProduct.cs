@@ -7,9 +7,10 @@ namespace eCommerceStarterCode.Models
     [Keyless]
     public class SellerProduct
     {
-        [ForeignKey("SellerId")]
-        public string SellerId { get; set; }
-        public Seller Seller { get; set; }
+      
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        public User User { get; set; }
         [ForeignKey("ProductId")]
         public string ProductId { get; set; }
         public Product Product { get; set; }
