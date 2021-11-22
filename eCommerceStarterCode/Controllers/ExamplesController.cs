@@ -25,7 +25,7 @@ namespace eCommerceStarterCode.Controllers
         {
             var userId = User.FindFirstValue("id");
             var user = _context.Users.Find(userId);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
