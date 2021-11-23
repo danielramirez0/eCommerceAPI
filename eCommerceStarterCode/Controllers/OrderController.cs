@@ -22,9 +22,21 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet, Authorize]
         public IActionResult GetAllOrders()
         {
-            var userId = User.FindFirstValue("id");
-            var orders = _context.Orders.Where(o => o.UserId == userId);
+            //var userId = User.FindFirstValue("id");
+            var orders = _context.Orders.ToArray();
             
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
+        }
+        [HttpGet("{id:int}"), Authorize]
+        public IActionResult GetSingleOrder(int id)
+        {
+            var userId = User.FindFirstValue("id");
+            var orders = _context.Orders.Where(o => o.UserId == userId).ToArray();
+
             if (orders == null)
             {
                 return NotFound();
