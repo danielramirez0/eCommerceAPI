@@ -14,6 +14,7 @@ namespace eCommerceStarterCode.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductRating> ProductRatings  { get; set; }
         public DbSet<SellerProduct> SellerProducts { get; set; }
+        public DbSet<SellerProduct > ShoppingCart  { get; set; }
         public ApplicationDbContext(DbContextOptions options)
             : base(options)
         {
