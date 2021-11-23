@@ -1,16 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using eCommerceStarterCode.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using eCommerceStarterCode.Models;
+using eCommerceStarterCode.Extensions;
 
 namespace eCommerceStarterCode.Controllers
 {
-    public class ShoppingCartController : Controller
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ShoppingCartController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public ShoppingCartController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+        [HttpGet]
+        public IActionResult GetShoppingCart()
+        {
+            var shoppingCart =
         }
     }
 }
