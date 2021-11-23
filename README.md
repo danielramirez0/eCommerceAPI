@@ -30,15 +30,15 @@ root/api
 - /shoppingcart
   - GET: shopping cart products for user
   - POST: add product to shopping cart for user
-- /orders
+- /order
   - POST: add order to database (protected:user)
-- /orders/all
+- /order/all
   - GET: get all orders (protected:admin)
-- /orders/product/{id}
+- /order/product/{id}
   - GET: orders for specific products
-- /orders/users/{id}
-  - GET: get all order for user id
-- /orders/detail/{id}
+- /order/user
+  - GET: get all order for user
+- /order/detail/{id}
   - GET: detail for specific order
 
 ## Technologies

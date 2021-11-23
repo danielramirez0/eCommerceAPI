@@ -18,26 +18,32 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-       
-        [HttpGet("/orders"), Authorize]
+
+        [HttpGet("all"), Authorize]
         public IActionResult GetAllOrders()
         {
-           
-            var orders = _context.Orders.ToArray();
-            
-            if (orders == null)
+            if (User.IsInRole("Seller"))
             {
-                return NotFound();
+                var orders = _context.Orders.ToArray();
+
+                if (orders == null)
+                {
+                    return NotFound();
+                }
+                return Ok(orders);
             }
-            return Ok(orders);
+            else
+            {
+                return Unauthorized(User);
+            }
         }
-       
-       
-        [HttpGet("orders/users/id"), Authorize]
-        public IActionResult GetSingleOrder(int id)
+
+
+        [HttpGet("user"), Authorize]
+        public IActionResult GetAllOrdersForUser()
         {
             var userId = User.FindFirstValue("id");
-            var orders = _context.Orders.Where(o => o.UserId == userId).ToArray();
+            var orders = _context.Orders.Where(o => o.UserId == userId);
 
             if (orders == null)
             {
@@ -46,16 +52,10 @@ namespace eCommerceStarterCode.Controllers
             return Ok(orders);
         }
 
-        [HttpGet("orders/detail/id"), Authorize]
+        [HttpGet("detail/{id}"), Authorize]
         public IActionResult GetOrderDetail(int id)
         {
-
-            var orderDetail = _context.OrderDetails
-                .Include(o => o.OrderId)
-                .Where(o => o.OrderId == id)
-                .Select(o => new { o.ProductId, o.Quantity, o.Price })
-                .ToArray();
-
+            var orderDetail = _context.OrderDetails.Where(o => o.OrderId == id).Include(o => o.Order).SingleOrDefault();
             if (orderDetail == null)
             {
                 return NotFound();
