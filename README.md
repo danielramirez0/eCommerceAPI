@@ -30,6 +30,8 @@ root/api
 - /shoppingcart
   - GET: shopping cart products for user
   - POST: add product to shopping cart for user
+  - PUT: update item in shopping cart
+  - DELETE: remove item from shopping cart
 - /order
   - POST: add order to database (protected:user)
 - /order/all

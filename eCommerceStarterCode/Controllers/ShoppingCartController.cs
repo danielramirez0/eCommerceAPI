@@ -25,7 +25,7 @@ namespace eCommerceStarterCode.Controllers
         public IActionResult GetShoppingCart()
         {
             var userId = User.FindFirstValue("id");
-            var shoppingCart = _context.ShoppingCart.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
+            var shoppingCart = _context.ShoppingCarts.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
             if (shoppingCart == null)
             {
                 return NotFound();
@@ -35,29 +35,44 @@ namespace eCommerceStarterCode.Controllers
 
         [HttpPost, Authorize]
 
-        public IActionResult PostShoppingCartItem([FromBody] string productId, int quantity)
+        public IActionResult PostShoppingCartItem([FromBody] Product product, [FromQuery] int quantity)
         {
             var userId = User.FindFirstValue("id");
-            var selectedItem = productId;
-            var existingShoppingCartItem = _context.ShoppingCart.Where(ci => ci.ProductId == selectedItem && ci.UserId == userId).SingleOrDefault();
-            if (existingShoppingCartItem != null)
+            var newShoppingCartItem = new ShoppingCart()
             {
-                existingShoppingCartItem.Quantity++;
-                _context.ShoppingCart.Update(existingShoppingCartItem);
-                _context.SaveChanges();
-            }
-            else
-            {
-                var newShoppingCartItem = new ShoppingCart()
-                {
-                    UserId = userId,
-                    ProductId = selectedItem,
-                    Quantity = 1,
-                };
+                UserId = userId,
+                ProductId = product.Id,
+                Quantity = quantity,
+            };
 
-                _context.ShoppingCart.Add(newShoppingCartItem);
-                _context.SaveChanges();
-            }
+            _context.ShoppingCarts.Add(newShoppingCartItem);
+            _context.SaveChanges();
+            return Ok(newShoppingCartItem);
+        }
+
+        [HttpPut, Authorize]
+        public IActionResult UpdateShopppingCart([FromBody] Product product, [FromQuery] int quantity)
+        {
+            var userId = User.FindFirstValue("id");
+            var updateItem = _context.ShoppingCarts.Where(ci => ci.ProductId == product.Id && ci.UserId == userId).SingleOrDefault();
+            updateItem.Quantity = quantity;
+            _context.ShoppingCarts.Update(updateItem);
+            _context.SaveChanges();
+
+            var updatedCart = _context.ShoppingCarts.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
+            return Ok(updatedCart);
+        }
+
+        [HttpDelete, Authorize]
+        public IActionResult DeleteItemFromShoppigCart([FromBody] Product product)
+        {
+            var userId = User.FindFirstValue("id");
+            var item = _context.ShoppingCarts.Where(ci => ci.ProductId == product.Id && ci.UserId == userId).SingleOrDefault();
+            _context.ShoppingCarts.Remove(item);
+            _context.SaveChanges();
+
+            var updatedCart = _context.ShoppingCarts.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
+            return Ok(updatedCart);
         }
     }
 }
