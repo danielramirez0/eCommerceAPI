@@ -20,7 +20,7 @@ namespace eCommerceStarterCode.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public IActionResult GetAllProducts()
         {
             var products = _context.Products;
@@ -62,13 +62,31 @@ namespace eCommerceStarterCode.Controllers
 
 
         [HttpPost, Authorize]
-        public IActionResult AddProduct([FromBody] Product product)
+        public IActionResult AddProduct([FromBody] Product values)
         {
             if (User.IsInRole("Seller"))
             {
-            _context.Products.Add(product);
-            _context.SaveChanges();
-            return StatusCode(201, product);
+                var userId = User.FindFirstValue("id");
+                var product = new Product()
+                {
+                    Name = values.Name,
+                    Description = values.Description,
+                    Price = values.Price,
+                    Stock = values.Stock,
+                    CategoryId = values.CategoryId,
+                };
+                _context.Products.Add(product);
+                _context.SaveChanges();
+
+                var userProduct = new SellerProduct()
+                {
+                    ProductId = product.Id,
+                    UserId = userId
+                };
+
+                var updatedSellerProducts = _context.SellerProducts.Where(sp => sp.UserId == userId).Include(sp => sp.Product).Select(sp => sp.Product);
+
+                return StatusCode(201, product);
             }
             else
             {

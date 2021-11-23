@@ -42,6 +42,12 @@ root/api
   - GET: get all order for user
 - /order/detail/{id}
   - GET: detail for specific order
+- /categories/{id}
+  - GET: category by id
+- /categories/name/{name}
+  - GET: category by name
+- /categories/all
+  - GET: all categories id and name
 
 ## Technologies
 

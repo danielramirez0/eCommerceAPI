@@ -10,8 +10,8 @@ using eCommerceStarterCode.Data;
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211122172503_buildmerge")]
-    partial class buildmerge
+    [Migration("20211123230643_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,14 +51,14 @@ namespace eCommerceStarterCode.Migrations
                         new
                         {
                             Id = "c073f42c-79e8-41a6-a5d7-0ed41ae7aca0",
-                            ConcurrencyStamp = "431056f2-0e14-4e8b-a5e1-8ce623065a95",
+                            ConcurrencyStamp = "b3d1d346-0f37-4031-a087-6c54f9cbe73c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "a85197de-2346-492e-861e-08b0370b485f",
-                            ConcurrencyStamp = "2180a22d-6cb1-4d4a-9c5d-4b91f3540a7d",
+                            ConcurrencyStamp = "04795ff8-2147-4bd0-a060-981db2bbc068",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -205,12 +205,61 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Computers"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "TVs"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Appliances"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Audio"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CellPhones"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Cameras"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "MoviesAndMusic"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "SmartHome"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "SecurityAndWifi"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Games"
+                        });
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Order", b =>
@@ -223,12 +272,6 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
@@ -237,11 +280,9 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SellerId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.OrderDetails", b =>
@@ -259,6 +300,8 @@ namespace eCommerceStarterCode.Migrations
                         .HasColumnType("int");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -289,7 +332,189 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 5,
+                            Description = "Latest and greatest iPhone",
+                            Name = "iPhone X",
+                            Price = 999.99000000000001,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Description = "Laptop i7, 16Gb Ram, 1TB SSD",
+                            Name = "MacBook Pro",
+                            Price = 1999.99,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            Description = "Desktop i9, 32Gb RAM, 1TB SSD",
+                            Name = "Alienware PC",
+                            Price = 2999.9899999999998,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 5,
+                            Description = "Watch all  and greatest iPhone",
+                            Name = "72\" Samsung OLED TV",
+                            Price = 999.99000000000001,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 6,
+                            Description = "20mp digital camera for content creators",
+                            Name = "Sony Camera",
+                            Price = 600.0,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 3,
+                            Description = "intelligent wifi washing maching- Know Your Laundry!!",
+                            Name = "Smart Washer",
+                            Price = 1500.0,
+                            Stock = 5
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 10,
+                            Description = "Own Space in this new sci-fi thriller FPS",
+                            Name = "Space Men 5051",
+                            Price = 60.0,
+                            Stock = 200
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 1,
+                            Description = "Monsterous gaming with 12GB GDDR6X RAM and Massive clock rates. Well worth the demand price created by miners!!",
+                            Name = "Nvidi RTX 3080 Ti",
+                            Price = 2300.0,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 10,
+                            Description = "Router made for fueling your elctronics with precision wireless internet.",
+                            Name = "TP-Link AC1750 Smart WiFi Router",
+                            Price = 50.0,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 5,
+                            Description = "Latest and greatest iPhone XIII",
+                            Name = "Iphone XIII",
+                            Price = 1299.99,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 6,
+                            Description = "Latest and greatest Camera",
+                            Name = "Sharp Camera",
+                            Price = 1500.99,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 1,
+                            Description = "LMemory Stick",
+                            Name = "Memory Stick",
+                            Price = 1299.99,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 5,
+                            Description = "Electronic Fan",
+                            Name = "Electronic Fan",
+                            Price = 299.99000000000001,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 10,
+                            Description = "Wifi Receiver",
+                            Name = "Wifi Receiver",
+                            Price = 1299.99,
+                            Stock = 110
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 4,
+                            Description = "Iwatch",
+                            Name = "Iwatch",
+                            Price = 1299.99,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 2,
+                            Description = "Samsung Smart TV 75 in ",
+                            Name = "Samsung Smart TV",
+                            Price = 1299.99,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 2,
+                            Description = "Home Theather 2022",
+                            Name = "Home Theather",
+                            Price = 959.99000000000001,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 1,
+                            Description = "Compact Laptop 15 in Triple core Intel CPU",
+                            Name = "Laptop",
+                            Price = 1299.99,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 2,
+                            Description = "Amazon Stick 350 TB Fully Cracked",
+                            Name = "Amazon Stick",
+                            Price = 599.99000000000001,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 1,
+                            Description = "Computer 16 GB Ram Brand New ",
+                            Name = "Computer 16 GB Ram",
+                            Price = 129.99000000000001,
+                            Stock = 10
+                        });
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.ProductRating", b =>
@@ -303,39 +528,47 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("ProductRating");
-                });
+                    b.HasIndex("ProductId");
 
-            modelBuilder.Entity("eCommerceStarterCode.Models.Seller", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasIndex("UserId");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Seller");
+                    b.ToTable("ProductRatings");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.SellerProduct", b =>
                 {
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("SellerId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("SellerProduct");
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SellerProducts");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
@@ -472,17 +705,9 @@ namespace eCommerceStarterCode.Migrations
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Order", b =>
                 {
-                    b.HasOne("eCommerceStarterCode.Models.Seller", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Seller");
 
                     b.Navigation("User");
                 });
@@ -495,7 +720,15 @@ namespace eCommerceStarterCode.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
@@ -507,6 +740,57 @@ namespace eCommerceStarterCode.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.ProductRating", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.SellerProduct", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
