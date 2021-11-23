@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceStarterCode.Data;
 
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122172503_buildmerge")]
+    partial class buildmerge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace eCommerceStarterCode.Migrations
                         new
                         {
                             Id = "c073f42c-79e8-41a6-a5d7-0ed41ae7aca0",
-                            ConcurrencyStamp = "733817e0-d552-4a8c-b147-577b3860f1b6",
+                            ConcurrencyStamp = "431056f2-0e14-4e8b-a5e1-8ce623065a95",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "a85197de-2346-492e-861e-08b0370b485f",
-                            ConcurrencyStamp = "e26edc9c-b687-4ff9-ac34-e9f425d289df",
+                            ConcurrencyStamp = "2180a22d-6cb1-4d4a-9c5d-4b91f3540a7d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -208,7 +210,7 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Order", b =>
@@ -239,7 +241,7 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.OrderDetails", b =>
@@ -287,7 +289,7 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.ProductRating", b =>
@@ -304,7 +306,7 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.ToTable("ProductRatings");
+                    b.ToTable("ProductRating");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Seller", b =>
@@ -322,7 +324,7 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sellers");
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.SellerProduct", b =>
@@ -333,7 +335,7 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<string>("SellerId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("SellerProducts");
+                    b.ToTable("SellerProduct");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>

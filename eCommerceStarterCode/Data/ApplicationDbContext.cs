@@ -7,8 +7,15 @@ namespace eCommerceStarterCode.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductRating> ProductRatings  { get; set; }
+        public DbSet<SellerProduct> SellerProducts { get; set; }
         public ApplicationDbContext(DbContextOptions options)
-            :base(options)
+            : base(options)
         {
 
         }
@@ -18,6 +25,7 @@ namespace eCommerceStarterCode.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new RolesConfiguration());
+
         }
 
     }

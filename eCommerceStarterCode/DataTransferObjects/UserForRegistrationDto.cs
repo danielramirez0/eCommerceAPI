@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eCommerceStarterCode.DataTransferObjects
 {
@@ -12,5 +13,13 @@ namespace eCommerceStarterCode.DataTransferObjects
         public string Password { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        [ForeignKey("ShippingAddress")]
+        public int ShippingAddressID { get; set; }
+        [ForeignKey("BillingAddress")]
+        public int BillingAddressID { get; set; }
+
+        [NotMapped]
+        public string RoleType { get; set; }
+
     }
 }
