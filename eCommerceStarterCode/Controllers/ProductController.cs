@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using eCommerceStarterCode.Models;
 using eCommerceStarterCode.Extensions;
+using Microsoft.AspNetCore.Authorization;
+
 namespace eCommerceStarterCode.Controllers
 {
     [Route("api/[controller]")]
@@ -17,22 +19,66 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        
-        // <baseurl>/api/examples/user
-        [HttpGet]
 
+        [HttpGet]
         public IActionResult GetAllProducts()
         {
             var products = _context.Products;
-            if(products == null)
+            if (products == null)
             {
                 return NotFound();
             }
 
             return Ok(products);
         }
-        [HttpGet("{search}")]
-        public IActionResult GetProductByName([FromQuery] string type, string value)
+
+        [HttpGet("{id}")]
+        public IActionResult GetProductById(int id)
+        {
+            var product = _context.Products.Where(p => p.Id == id).SingleOrDefault();
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
+
+        [HttpGet("reviews/{id}")]
+        public IActionResult GetReviewsForProduct(int id)
+        {
+            var reviews = _context.ProductRatings.Where(pr => pr.ProductId == id).Include(pr => pr.Product).Include(pr => pr.User);
+            return Ok(reviews);
+        }
+
+
+        [HttpPost("reviews/{id}"), Authorize]
+        public IActionResult AddReviewForProduct(int id)
+        {
+            var userId = User.FindFirstValue("id");
+            var reviews = _context.ProductRatings.Where(pr => pr.ProductId == id);
+            return Ok(reviews);
+        }
+
+
+        [HttpPost, Authorize]
+        public IActionResult AddProduct([FromBody] Product product)
+        {
+            if (User.IsInRole("Seller"))
+            {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return StatusCode(201, product);
+            }
+            else
+            {
+                return Unauthorized(User);
+            }
+        }
+
+
+        [HttpGet("category/{category}")]
+        public IActionResult GetProductsByCategory(string category)
         {
 
             var products = _context.Products;
@@ -40,9 +86,8 @@ namespace eCommerceStarterCode.Controllers
             {
                 return NotFound();
             }
-
-                var product = _context.Products.Where(p => p.GetProperty(type) == value).SingleOrDefault();
-            if(product == null)
+            var product = _context.Products.Where(p => p.Category.Name == category);
+            if (product == null)
             {
                 return NotFound();
             }
@@ -50,21 +95,38 @@ namespace eCommerceStarterCode.Controllers
             return Ok(product);
 
         }
-        
-        public IActionResult PostProduct([FromBody]Product value)
+
+        [HttpGet("name/{name}")]
+        public IActionResult GetProductsByName(string name)
         {
-            _context.Products.Add(value);
-            _context.SaveChanges();
-            return StatusCode(201, value);
+
+            var products = _context.Products;
+            if (products == null)
+            {
+                return NotFound();
+            }
+            var product = _context.Products.Where(p => p.Name == name);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
 
         }
 
-        public IActionResult DeleteProduct([FromBody]Product ProductId)
-        {
-            _context.Products.Remove(ProductId);
-            _context.SaveChanges();
-            return StatusCode(201, ProductId);
 
+        [HttpDelete("{id}"), Authorize]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = _context.Products.Where(p => p.Id == id).SingleOrDefault();
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+            return Ok(product);
         }
     }
 }
