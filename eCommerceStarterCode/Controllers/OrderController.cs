@@ -63,5 +63,43 @@ namespace eCommerceStarterCode.Controllers
             return Ok(orderDetail);
         }
 
+        [HttpGet("detail/{id}"), Authorize]
+        public IActionResult GetOrderProduct(int id)
+        {
+           var productInOrder = _context.OrderDetails;
+
+           var orders = from o in _context.OrderDetails
+                         from p in _context.Products
+                         where o.Order.Id == o.OrderId
+                         where p.Id == id
+                         select o;
+
+
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
+        }
+
+        [HttpGet("detail/{id}"), Authorize]
+        public IActionResult GetOrderProduct(int id)
+        {
+           var productInOrder = _context.OrderDetails;
+
+           var orders = from o in _context.OrderDetails
+                         from p in _context.Products
+                         where o.Order.Id == o.OrderId
+                         where p.Id == id
+                         select o;
+
+
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
+        }
+
     }
 }
