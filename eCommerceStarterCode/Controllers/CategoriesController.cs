@@ -1,12 +1,6 @@
 ﻿using eCommerceStarterCode.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Controllers
 {
@@ -20,16 +14,34 @@ namespace eCommerceStarterCode.Controllers
             _context = context;
         }
      
-        [HttpGet]
+        [HttpGet("all")]
         public IActionResult GetAllCategories()
         {
 
-            var allCategories = _context.Categories;
-           if (allCategories == null)
+            var categories = _context.Categories;
+            return Ok(categories);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetCategoryById(int id)
+        {
+            var category = _context.Categories.Where(c => c.Id == id).SingleOrDefault();
+            if(category == null)
             {
                 return NotFound();
             }
-            return Ok(allCategories);
+            return Ok(category);
+        }
+
+        [HttpGet("name/{name}")]
+        public IActionResult GetCategoryById(string name)
+        {
+            var category = _context.Categories.Where(c => c.Name == name).SingleOrDefault();
+            if(category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
     }
 }

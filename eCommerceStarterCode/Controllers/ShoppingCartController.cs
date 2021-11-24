@@ -1,11 +1,9 @@
 ﻿using eCommerceStarterCode.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using eCommerceStarterCode.Models;
-using eCommerceStarterCode.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerceStarterCode.Controllers
