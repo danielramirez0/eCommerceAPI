@@ -1,4 +1,4 @@
-﻿using eCommerceStarterCode.Configuration;
+using eCommerceStarterCode.Configuration;
 using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -49,6 +49,7 @@ root/api
 - /categories/all
   - GET: all categories id and name
 
+
 ## Technologies
 
 MSSQL Server, ASP.NET Core Web API, Entity Framework

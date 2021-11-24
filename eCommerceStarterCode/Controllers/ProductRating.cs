@@ -1,4 +1,4 @@
-﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
