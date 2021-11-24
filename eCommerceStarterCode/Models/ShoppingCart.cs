@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,18 +12,18 @@ namespace eCommerceStarterCode.Models
     public class ShoppingCart
     {
         
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
 
         [ForeignKey("Product")]
 
         public int ProductId { get; set; }
 
-        public Product Product { get; set; }  
+        public virtual Product Product { get; set; }  
         
         [ForeignKey("User")]
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

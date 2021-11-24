@@ -12,32 +12,43 @@ root/api
     - POST: jwt token retrieval and user registration
 - /addresses
   - POST: add address
-- /addresses?type=shipping(or billing)
+- /addresses?type={shipping/billing}
   - GET: get shipping or billing for user (protected)
 - /products
   - GET: list all products
-- /products?category=value
+  - POST: add a product {send product}
+- /product/category/{category}
   - GET: products by speific category
-- /products?name=value
+- /product/name/{name}
   - GET: products by speific name
-- /products/id
+- /products/{id}
   - GET: product by ID
-- /products/id/reviews
+  - DELETE: delete a product 
+- /products/reviews/{id}
   - GET: reviews for specific product
   - POST: submit review for spefic product
 - /shoppingcart
   - GET: shopping cart products for user
   - POST: add product to shopping cart for user
-- /orders
+  - PUT: update item in shopping cart
+  - DELETE: remove item from shopping cart
+- /order
   - POST: add order to database (protected:user)
-- /orders/all
+- /order/all
   - GET: get all orders (protected:admin)
-- /orders/products/id
+- /order/product/{id}
   - GET: orders for specific products
-- /orders/users/id
-  - GET: get all order for user id
-- /orders/detail/id
+- /order/user
+  - GET: get all order for user
+- /order/detail/{id}
   - GET: detail for specific order
+- /categories/{id}
+  - GET: category by id
+- /categories/name/{name}
+  - GET: category by name
+- /categories/all
+  - GET: all categories id and name
+
 
 ## Technologies
 
