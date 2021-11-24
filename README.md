@@ -14,17 +14,17 @@ root/api
   - POST: add address
 - /addresses?type={shipping/billing}
   - GET: get shipping or billing for user (protected)
-- /products
+- /product
   - GET: list all products
   - POST: add a product {send product}
 - /product/category/{category}
   - GET: products by speific category
 - /product/name/{name}
   - GET: products by speific name
-- /products/{id}
+- /product/{id}
   - GET: product by ID
   - DELETE: delete a product 
-- /products/reviews/{id}
+- /product/reviews/{id}
   - GET: reviews for specific product
   - POST: submit review for spefic product
 - /shoppingcart
