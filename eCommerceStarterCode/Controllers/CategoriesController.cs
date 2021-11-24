@@ -1,16 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eCommerceStarterCode.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Controllers
 {
-    public class HomeController : Controller
+    [Route("api/examples")]
+    [ApiController]
+    public class CategoriesController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public CategoriesController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+     
+        [HttpGet]
+        public IActionResult GetAllCategories()
+        {
+
+            var allCategories = _context.Categories;
+           if (allCategories == null)
+            {
+                return NotFound();
+            }
+            return Ok(allCategories);
         }
     }
 }
