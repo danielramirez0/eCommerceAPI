@@ -46,7 +46,7 @@ namespace eCommerceStarterCode.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostAddress([FromBody]Address value)
+        public IActionResult PostAddress([FromBody] Address value)
         {
             _context.Addresses.Add(value);
             _context.SaveChanges();
