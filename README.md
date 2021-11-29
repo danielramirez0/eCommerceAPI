@@ -14,7 +14,7 @@ root/api
   - POST: add address
 - /addresses?type={shipping/billing}
   - GET: get shipping or billing for user (protected)
-- /product
+- /product/all
   - GET: list all products
   - POST: add a product {send product}
 - /product/category/{category}
