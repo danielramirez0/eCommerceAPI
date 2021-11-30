@@ -65,11 +65,11 @@ namespace eCommerceStarterCode.Data
                 new Product { Id = 20, Name = "Computer 16 GB Ram", Description = "Computer 16 GB Ram Brand New ", Price = 129.99, Stock = 10, CategoryId = 1}
                 );
 
-            modelBuilder.Entity<SellerProduct>().HasNoKey();
-            modelBuilder.Entity<ShoppingCart>().HasNoKey();
-
+            modelBuilder.Entity<OrderDetails>().HasKey(od => new { od.ProductId, od.OrderId});
+            modelBuilder.Entity<SellerProduct>().HasKey(sp => new { sp.UserId, sp.ProductId });
+            modelBuilder.Entity<ShoppingCart>().HasKey(sc => new { sc.UserId, sc.ProductId});
+            modelBuilder.Entity<ProductRating>().HasKey(pr => new { pr.UserId, pr.ProductId});
 
         }
-
     }
 }

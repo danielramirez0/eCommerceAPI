@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceStarterCode.Models
 {
-    [Keyless]
     public class ProductRating
     {
         [ForeignKey("UserId")]
