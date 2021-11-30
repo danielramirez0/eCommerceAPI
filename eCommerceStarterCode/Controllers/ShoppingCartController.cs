@@ -45,7 +45,8 @@ namespace eCommerceStarterCode.Controllers
 
             _context.ShoppingCarts.Add(newShoppingCartItem);
             _context.SaveChanges();
-            return Ok(newShoppingCartItem);
+            var shoppingCart = _context.ShoppingCarts.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
+            return Ok(shoppingCart);
         }
 
         [HttpPut, Authorize]

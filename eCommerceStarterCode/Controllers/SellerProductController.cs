@@ -22,7 +22,7 @@ namespace eCommerceStarterCode.Controllers
         public IActionResult GetAllSellerProducts()
         {
             var userId = User.FindFirstValue("id");
-            var sellerProducts = _context.SellerProducts.Where(sp => sp.UserId == userId).Include(sp => sp.ProductId).ToList();
+            var sellerProducts = _context.SellerProducts.Where(sp => sp.UserId == userId).Include(sp => sp.Product);
             if (sellerProducts == null)
             {
                 return NotFound();
