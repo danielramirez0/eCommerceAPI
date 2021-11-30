@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using eCommerceStarterCode.Models;
+using System;
 
 namespace eCommerceStarterCode.Controllers
 {
@@ -20,8 +22,8 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet("all"), Authorize]
         public IActionResult GetAllOrders()
         {
-            if (User.IsInRole("Seller"))
-            {
+            //if (User.IsInRole("Seller"))
+            //{
                 var orders = _context.Orders.ToArray();
 
                 if (orders == null)
@@ -29,11 +31,11 @@ namespace eCommerceStarterCode.Controllers
                     return NotFound();
                 }
                 return Ok(orders);
-            }
-            else
-            {
-                return Unauthorized(User);
-            }
+            //}
+            //else
+            //{
+                //return Unauthorized(User);
+            //}
         }
 
 
@@ -71,6 +73,31 @@ namespace eCommerceStarterCode.Controllers
                 return NotFound();
             }
             return Ok(productOrders);
+        }
+
+        [HttpPost, Authorize]
+        public IActionResult SubmitOrder([FromBody] Order order)
+        {
+            var userId = User.FindFirstValue("id");
+            order.UserId = userId;
+            order.Date = DateTime.Now;
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            return Ok(order);
+
+        }
+
+        [HttpPost("detail"), Authorize]
+        public IActionResult SaveOrderDetails([FromBody] OrderDetails details)
+        {
+            var userId = User.FindFirstValue("id");
+            _context.OrderDetails.Add(details);
+            _context.SaveChanges();
+
+            return Ok(details);
+            
         }
 
     }

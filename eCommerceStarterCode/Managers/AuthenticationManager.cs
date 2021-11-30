@@ -54,7 +54,7 @@ namespace eCommerceStarterCode.Managers
                 new Claim("username", _user.UserName),
                 new Claim("email", _user.Email),
                 new Claim("id", _user.Id),
-                new Claim("fistName", _user.FirstName),
+                new Claim("firstName", _user.FirstName),
                 new Claim("lastName", _user.LastName),
                 new Claim("phoneNumber", _user.PhoneNumber)
             };
