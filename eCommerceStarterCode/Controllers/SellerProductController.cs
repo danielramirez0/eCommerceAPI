@@ -30,11 +30,16 @@ namespace eCommerceStarterCode.Controllers
             return Ok(sellerProducts);
         }
         [HttpPost]
-        public IActionResult PostAddress([FromBody] SellerProduct value)
+        public IActionResult PostAddress([FromBody] int productId)
         {
-            _context.SellerProducts.Add(value);
+            SellerProduct sellerProduct = new SellerProduct()
+            {
+                ProductId = productId,
+                UserId = User.FindFirstValue("id"),
+            };
+            _context.SellerProducts.Add(sellerProduct);
             _context.SaveChanges();
-            return StatusCode(201, value);
+            return StatusCode(201, sellerProduct);
         }
     }
 }

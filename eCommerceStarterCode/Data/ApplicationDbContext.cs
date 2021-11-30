@@ -65,6 +65,9 @@ namespace eCommerceStarterCode.Data
                 new Product { Id = 20, Name = "Computer 16 GB Ram", Description = "Computer 16 GB Ram Brand New ", Price = 129.99, Stock = 10, CategoryId = 1}
                 );
 
+            modelBuilder.Entity<SellerProduct>().HasNoKey();
+            modelBuilder.Entity<ShoppingCart>().HasNoKey();
+
 
         }
 
