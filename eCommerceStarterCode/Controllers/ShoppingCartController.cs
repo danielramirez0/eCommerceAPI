@@ -36,6 +36,16 @@ namespace eCommerceStarterCode.Controllers
         public IActionResult PostShoppingCartItem([FromBody] Product product, [FromQuery] int quantity)
         {
             var userId = User.FindFirstValue("id");
+
+            var exists = _context.ShoppingCarts.Where(pu => pu.UserId == userId && pu.ProductId == product.Id).SingleOrDefault();
+            if (exists != null)
+            {
+                exists.Quantity = exists.Quantity + 1;
+                _context.ShoppingCarts.Update(exists);
+                _context.SaveChanges();
+                var updatedCart = _context.ShoppingCarts.Where(pu => pu.UserId == userId).Include(pu => pu.Product).Include(pu => pu.User);
+                return Ok(updatedCart);
+            }
             var newShoppingCartItem = new ShoppingCart()
             {
                 UserId = userId,
@@ -62,11 +72,11 @@ namespace eCommerceStarterCode.Controllers
             return Ok(updatedCart);
         }
 
-        [HttpDelete, Authorize]
-        public IActionResult DeleteItemFromShoppigCart([FromBody] Product product)
+        [HttpDelete("{productId}"), Authorize]
+        public IActionResult DeleteItemFromShoppigCart(int productId)
         {
             var userId = User.FindFirstValue("id");
-            var item = _context.ShoppingCarts.Where(ci => ci.ProductId == product.Id && ci.UserId == userId).SingleOrDefault();
+            var item = _context.ShoppingCarts.Where(ci => ci.ProductId == productId && ci.UserId == userId).SingleOrDefault();
             _context.ShoppingCarts.Remove(item);
             _context.SaveChanges();
 
