@@ -65,26 +65,31 @@ namespace eCommerceStarterCode.Controllers
             //if (User.IsInRole("Seller"))
             //{
             var userId = User.FindFirstValue("id");
-            var product = new Product()
+            var category = _context.Categories.Where(c => c.Id == values.CategoryId).SingleOrDefault();
+            var sellerProduct = new Product()
             {
                 Name = values.Name,
                 Description = values.Description,
                 Price = values.Price,
                 Stock = values.Stock,
-                CategoryId = values.CategoryId,
+                CategoryId = category.Id,
             };
-            _context.Products.Add(product);
+            _context.Products.Add(sellerProduct);
             _context.SaveChanges();
 
+            var product = _context.Products.Where(p=>p.Id == sellerProduct.Id).SingleOrDefault();
             var userProduct = new SellerProduct()
             {
                 ProductId = product.Id,
                 UserId = userId
             };
 
+            _context.SellerProducts.Add(userProduct);
+            _context.SaveChanges();
+
             var updatedSellerProducts = _context.SellerProducts.Where(sp => sp.UserId == userId).Include(sp => sp.Product).Select(sp => sp.Product);
 
-            return StatusCode(201, product);
+            return StatusCode(201, updatedSellerProducts);
             ////////}
             //////else
             ////{
