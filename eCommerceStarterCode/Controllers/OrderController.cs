@@ -24,17 +24,17 @@ namespace eCommerceStarterCode.Controllers
         {
             //if (User.IsInRole("Seller"))
             //{
-                var orders = _context.Orders.ToArray();
+            var orders = _context.Orders.ToArray();
 
-                if (orders == null)
-                {
-                    return NotFound();
-                }
-                return Ok(orders);
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
             //}
             //else
             //{
-                //return Unauthorized(User);
+            //return Unauthorized(User);
             //}
         }
 
@@ -66,7 +66,7 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet("product/{id}"), Authorize]
         public IActionResult GetOrdersByProduct(int id)
         {
-           var productOrders = _context.OrderDetails.Where(od => od.ProductId == id).Include(od => od.Product);
+            var productOrders = _context.OrderDetails.Where(od => od.ProductId == id).Include(od => od.Product);
 
             if (productOrders == null)
             {
@@ -92,12 +92,26 @@ namespace eCommerceStarterCode.Controllers
         [HttpPost("detail"), Authorize]
         public IActionResult SaveOrderDetails([FromBody] OrderDetails details)
         {
-            var userId = User.FindFirstValue("id");
-            _context.OrderDetails.Add(details);
-            _context.SaveChanges();
+            var originalOrder = _context.Orders.Where(o => o.Id == details.OrderId).SingleOrDefault();
+            if (originalOrder != null)
+            {
 
-            return Ok(details);
-            
+                var newOrder = new OrderDetails()
+                {
+                    OrderId = originalOrder.Id,
+                    ProductId = details.ProductId,
+                    Price = details.Price,
+                    Quantity = details.Quantity,
+                };
+                _context.OrderDetails.Add(newOrder);
+                _context.SaveChanges();
+
+                return Ok(details);
+            }else
+            {
+                return BadRequest();
+            }
+
         }
 
     }
