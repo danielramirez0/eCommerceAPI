@@ -55,7 +55,7 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet("detail/{id}"), Authorize]
         public IActionResult GetOrderDetail(int id)
         {
-            var orderDetail = _context.OrderDetails.Where(o => o.OrderId == id).Include(o => o.Order).SingleOrDefault();
+            var orderDetail = _context.OrderDetails.Where(o => o.OrderId == id).Include(o => o.Order).Include(o=>o.Product).ToList();
             if (orderDetail == null)
             {
                 return NotFound();
